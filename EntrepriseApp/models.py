@@ -4,9 +4,9 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 class Utilisateur(AbstractUser):
     email=models.EmailField(unique=True)
-    user_id =models.CharField(primery_key=True,max_lenght=8)
-    telephone =models.CharField(max_lenght=15, blank=True ,null=True)
-    role = models.CharField(max_lenght=20,choices=[
+    user_id =models.CharField(primary_key=True,max_length=8)
+    telephone =models.CharField(max_length=15, blank=True ,null=True)
+    role = models.CharField(max_length=20,choices=[
         ('admin','Admin'),
         ('c','chargeur'),
         ('t','transpporteur')
@@ -26,4 +26,5 @@ class Entreprise(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at =models.DateTimeField(auto_now=True)
     gerant= models.OneToOneField(Utilisateur ,on_delete=models.CASCADE,related_name='entreprise')
-    
+
+
