@@ -1,12 +1,18 @@
+from decimal import Decimal
 from django.db import models
+from django.core.validators import MinValueValidator
 from EntrepriseApp.models import Entreprise
 from VehiculeApp.models import Vehicule
 from ExpeditionApp.models import Expedition
 
-# Create your models here.
+
 class offre(models.Model):
-    prix=models.DecimalField(max_digits=10,decimal_places=2)
-    delai_jours=models.PositiveIntegerField()
+    prix = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal('0.1'))]
+    )
+    delai_jours = models.PositiveIntegerField(validators=[MinValueValidator(1)])
     statut=models.CharField(max_length=100,choices=[('p','proposee'),
     ('a','acceptee'),
     ('r','refusee'),

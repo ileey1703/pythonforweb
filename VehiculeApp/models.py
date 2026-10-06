@@ -1,5 +1,6 @@
 from django.db import models
 from EntrepriseApp.models import Entreprise
+from django.core.validators import MinValueValidator
 
 # Create your models here.
 class Vehicule(models.Model):
@@ -8,7 +9,7 @@ class Vehicule(models.Model):
     ('f','fourgon'),
     ('sr','semi-remorque'),
     ('cp','camion porteur')])
-    capacite_kg=models.PositiveIntegerField()
+    capacite_kg=models.PositiveIntegerField(validators=[MinValueValidator(1,"la valeur doit etre strictement possitive")])
     disponible=models.BooleanField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at =models.DateTimeField(auto_now=True)
