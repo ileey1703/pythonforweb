@@ -20,7 +20,7 @@ class Expedition(models.Model):
     def clean(self):
         super().clean()
         if self.entreprise_id and self.entreprise.type_entreprise !='c':
-            raise ValidationError({"entreprise": "une expedition ne peut pas etre cree par un chargeur"})
+            raise ValidationError({"entreprise": "une expedition ne peut pas etre cree que par un chargeur"})
 
     @classmethod
     def _generate_reference(cls):
@@ -40,7 +40,7 @@ class Expedition(models.Model):
     
     def save(self ,*args, **kwargs):
         if not self.reference:
-            self.reference = self.generate_reference()
+            self.reference = self._generate_reference()
         #fct apple pour appliquer les validators avant l'enregistrement
         self.full_clean()
         super().save(*args, **kwargs)
