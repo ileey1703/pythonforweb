@@ -16,7 +16,7 @@ def validate_email(value):
 
 # Create your models here.
 class Utilisateur(AbstractUser):
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True , validators=[validate_email])
     user_id = models.CharField(primary_key=True, max_length=8, unique=True)
     telephone = models.CharField(max_length=15, blank=True, null=True)
     role = models.CharField(max_length=20, choices=[
@@ -50,7 +50,7 @@ class Utilisateur(AbstractUser):
 
     def save(self, *args, **kwargs):
         if not self.user_id:
-            self.user_id = self.generate_user_id()
+            self.user_id = self._generate_user_id()
         super().save(*args, **kwargs)
 
 matricule_fiscal_validator= RegexValidator(
