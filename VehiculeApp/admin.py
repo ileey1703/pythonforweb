@@ -8,7 +8,7 @@ class VehiculeAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at', 'updated_at')
     fieldsets = (
         ('Identification', {
-            'fields': ('immatriculation', 'type_vehicule')
+            'fields': ('immatriculation', 'type_vehicule','capacite_kg')
         }),
         ('Statut et rattachement', {
             'fields': ('disponible', 'entreprise')
