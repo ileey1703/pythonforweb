@@ -2,10 +2,8 @@ from django.contrib import admin
 from .models import Entreprise, Utilisateur
 from django.contrib.auth.admin import UserAdmin
 from VehiculeApp.models import Vehicule
+from config.admin import admin_site
 # Register your models here.
-admin.site.site_header = "TransConnect- Administration"
-admin.site.site_title = "TransConnect"
-admin.site.index_title = "tablau de bord"
 class useradmin(UserAdmin):
     list_display = ('user_id','username', 'email', 'is_active','is_superuser')
     list_editable = ('username','is_active','is_superuser')
@@ -51,5 +49,5 @@ class EntrepriseAdmin(admin.ModelAdmin):
         }),
     )
 
-admin.site.register(Entreprise, EntrepriseAdmin)
-admin.site.register(Utilisateur,useradmin)
+admin_site.register(Entreprise, EntrepriseAdmin)
+admin_site.register(Utilisateur,useradmin)

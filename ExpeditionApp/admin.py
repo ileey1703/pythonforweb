@@ -1,6 +1,21 @@
 from django.contrib import admin
 from .models import Expedition
+from OffreApp.models import offre
+from config.admin import admin_site
 from django.utils import timezone
+
+
+class OffreInline(admin.StackedInline):
+    model = offre
+    fk_name = 'expedition'
+    fields = ('entreprise', 'vehicule', 'prix', 'delai_jours', 'statut', 'date_proposition')
+    readonly_fields = fields
+    extra = 0
+    can_delete = False
+    show_change_link = True
+
+    def has_add_permission(self, request, obj=None):
+        return False
 
 
 class EnRetardFilter(admin.SimpleListFilter):
@@ -18,8 +33,10 @@ class EnRetardFilter(admin.SimpleListFilter):
     
 
 
-@admin.register(Expedition)
+@admin.register(Expedition, site=admin_site)
 class ExpeditionAdmin(admin.ModelAdmin):
+    inlines = [OffreInline]
+    actions = ['cloturer_expeditions']
     list_display = (
         'reference',
         'ville_depart',
@@ -52,3 +69,21 @@ class ExpeditionAdmin(admin.ModelAdmin):
             'classes': ('collapse',),
         }),
     )
+
+    @admin.action(description="Clôturer les expéditions sélectionnées")
+    def cloturer_expeditions(self, request, queryset):
+        expeditions_a_cloturer = queryset.filter(statut='attribuee')
+        nombre_selectionne = queryset.count()
+        nombre_cloturees = 0
+
+        for expedition in expeditions_a_cloturer:
+            expedition.statut = 'terminee'
+            expedition.save()
+            nombre_cloturees += 1
+
+        nombre_ignorees = nombre_selectionne - nombre_cloturees
+        self.message_user(
+            request,
+            f"{nombre_cloturees} expédition(s) clôturée(s). "
+            f"{nombre_ignorees} expédition(s) ignorée(s) car elles ne sont pas en cours."
+        )

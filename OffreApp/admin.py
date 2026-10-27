@@ -1,5 +1,11 @@
+import csv
+
 from django.contrib import admin
+from django.http import HttpResponse
+
+from config.admin import admin_site
 from .models import offre
+
 
 class PrixFilter(admin.SimpleListFilter):
     title="prix"
@@ -14,8 +20,9 @@ class PrixFilter(admin.SimpleListFilter):
         if self.value() =="1000_10000":
             return queryset.filter( prix__gte=1000, prix__lt=10000)
         return queryset 
-@admin.register(offre)
+@admin.register(offre, site=admin_site)
 class OffreAdmin(admin.ModelAdmin):
+    actions = ("exporter_offres_csv",)
     list_display = ('entreprise', 'expedition', 'vehicule', 'prix', 'delai_jours', 'statut')
     search_fields = (
         'entreprise__raison_social',
@@ -36,3 +43,22 @@ class OffreAdmin(admin.ModelAdmin):
             'classes': ('collapse',),
         }),
     )
+
+    @admin.action(description="Exporter la sélection en CSV")
+    def exporter_offres_csv(self, request, queryset):
+        response = HttpResponse(content_type="text/csv; charset=utf-8")
+        response["Content-Disposition"] = 'attachment; filename="offres.csv"'
+        writer = csv.writer(response)
+        writer.writerow(
+            ("reference_expedition", "transporteur", "prix", "statut")
+        )
+        for offre_selectionnee in queryset.select_related("expedition", "entreprise"):
+            writer.writerow(
+                (
+                    offre_selectionnee.expedition.reference,
+                    offre_selectionnee.entreprise.raison_social,
+                    offre_selectionnee.prix,
+                    offre_selectionnee.get_statut_display(),
+                )
+            )
+        return response

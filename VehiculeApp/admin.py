@@ -1,7 +1,8 @@
 from django.contrib import admin
 from .models import Vehicule
+from config.admin import admin_site
 # Register your models here.
-@admin.register(Vehicule)
+@admin.register(Vehicule, site=admin_site)
 
 class VehiculeAdmin(admin.ModelAdmin):
     list_display = ('type_vehicule','disponible','capacite_kg')

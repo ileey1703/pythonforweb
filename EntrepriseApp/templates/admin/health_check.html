@@ -1,0 +1,22 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+  <div id="content-main">
+    <h1>Contrôle d'intégrité des données</h1>
+    <p>Les listes ci-dessous affichent les anomalies détectées. Les résultats sont limités à 100 lignes par contrôle.</p>
+    {% for controle in controles %}
+      <section class="module">
+        <h2>{{ controle.titre }} : {{ controle.nombre }}</h2>
+        {% if controle.nombre %}
+          <ul>
+            {% for element in controle.elements %}
+              <li>{{ element }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p>Aucune anomalie détectée.</p>
+        {% endif %}
+      </section>
+    {% endfor %}
+  </div>
+{% endblock %}
