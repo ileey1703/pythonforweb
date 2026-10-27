@@ -20,7 +20,7 @@ class Expedition(models.Model):
         max_length=100,
         choices=[
             ('en_attente', 'En attente'),
-            ('publiee', 'Publiée'),
+            ('publiee', 'Publiee'),
             ('attribuee', 'Attribuée'),
             ('terminee', 'Terminée'),
             ('annulee', 'Annulée'),

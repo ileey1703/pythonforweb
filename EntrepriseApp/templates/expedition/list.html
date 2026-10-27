@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des expéditions</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'EntrepriseApp/expedition.css' %}">
+</head>
+<body>
+    
+        <h1>Liste des expéditions</h1>
+        <ul>
+            {% for expedition in list %}
+                <li><a href="{% url 'detail' pk=expedition.pk %}">detail</a>
+                    <a href="{% url 'delete' pk=expedition.pk %}">delete</a>
+                    {{ expedition.reference }}</a> — {{ expedition.entreprise }} — {{ expedition.ville_depart }} → {{ expedition.ville_arrivee }} — {{ expedition.ville_poids_kg }} kg</li>
+                {% empty %}
+                <li>Aucune expédition disponible</li>
+            {% endfor %}
+
+        </ul>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détail de l'expédition</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'EntrepriseApp/expedition.css' %}">
+</head>
+<body>
+    <main>
+        <h1>Détail de l'expédition</h1>
+        <p><strong>Référence :</strong> {{ expedition.reference }}</p>
+        <p><strong>Entreprise :</strong> {{ expedition.entreprise }}</p>
+        <p><strong>Ville de départ :</strong> {{ expedition.ville_depart }}</p>
+        <p><strong>Ville d'arrivée :</strong> {{ expedition.ville_arrivee }}</p>
+        <p><strong>Poids :</strong> {{ expedition.ville_poids_kg }} kg</p>
+        <a href="{% url 'list' %}">Retour à la liste</a>
+    </main>
+</body>
+</html>
