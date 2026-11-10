@@ -2,7 +2,7 @@
 
 {% block content %}
   <p>
-    <a href="{% url 'admin:health_check' %}">Ouvrir le contrôle d'intégrité</a>
+    <a class="button" href="{% url 'admin:health_check' %}">Ouvrir le contrôle d'intégrité</a>
   </p>
   {{ block.super }}
 {% endblock %}

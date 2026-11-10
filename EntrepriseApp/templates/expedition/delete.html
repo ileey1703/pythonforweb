@@ -1,0 +1,17 @@
+{% extends "expedition/base.html" %}
+
+{% block title %}Supprimer {{ expedition.reference }} | TransConnect{% endblock %}
+
+{% block content %}
+    <section class="panel confirm-panel">
+        <span class="warning-icon" aria-hidden="true">!</span>
+        <p class="eyebrow">CONFIRMATION</p>
+        <h1>Supprimer cette expédition&nbsp;?</h1>
+        <p class="confirm-copy">Vous êtes sur le point de supprimer l'expédition <strong>{{ expedition.reference }}</strong>. Cette action est définitive.</p>
+        <form method="post" class="confirm-actions">
+            {% csrf_token %}
+            <a class="button button-secondary" href="{% url 'listclass' %}">Annuler</a>
+            <button class="button button-danger" type="submit">Oui, supprimer</button>
+        </form>
+    </section>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "expedition/base.html" %}
+
+{% block title %}Bienvenue {{ name }} | TransConnect{% endblock %}
+
+{% block content %}
+    <section class="panel welcome-panel">
+        <p class="eyebrow">TRANSPORT &amp; LOGISTIQUE</p>
+        <h1>Bonjour {{ name }}</h1>
+        <p class="page-subtitle">Bienvenue dans votre espace TransConnect.</p>
+        <div class="panel-actions">
+            <a class="button button-primary" href="{% url 'listclass' %}">Accéder aux expéditions</a>
+        </div>
+    </section>
+{% endblock %}

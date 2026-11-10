@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f5f7fb">
+    <title>{% block title %}TransConnect{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'EntrepriseApp/expedition.css' %}">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="{% url 'listclass' %}" aria-label="TransConnect, accueil">
+            <span class="brand-mark" aria-hidden="true">T</span>
+            <span>TransConnect</span>
+        </a>
+        <nav class="site-nav" aria-label="Navigation principale">
+            <a href="{% url 'listclass' %}">Expéditions</a>
+            <a class="button button-primary button-small" href="{% url 'createclass' %}">Nouvelle expédition</a>
+        </nav>
+    </header>
+    <main class="page-shell">
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="site-footer">TransConnect <span aria-hidden="true">·</span> Gestion des expéditions</footer>
+</body>
+</html>

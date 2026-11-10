@@ -1,0 +1,15 @@
+{% extends "expedition/base.html" %}
+
+{% block title %}Accueil | TransConnect{% endblock %}
+
+{% block content %}
+    <section class="panel welcome-panel">
+        <p class="eyebrow">TRANSPORT &amp; LOGISTIQUE</p>
+        <h1>Bienvenue sur TransConnect</h1>
+        <p class="page-subtitle">Retrouvez vos expéditions et organisez vos opérations de transport depuis un espace unique.</p>
+        <div class="panel-actions">
+            <a class="button button-secondary" href="{% url 'listclass' %}">Voir les expéditions</a>
+            <a class="button button-primary" href="{% url 'createclass' %}">Créer une expédition</a>
+        </div>
+    </section>
+{% endblock %}

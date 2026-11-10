@@ -1,25 +1,65 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des expéditions</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'EntrepriseApp/expedition.css' %}">
-</head>
-<body>
-    
-        <h1>Liste des expéditions</h1>
-        <ul>
-            {% for expedition in list %}
-                <li><a href="{% url 'detail' pk=expedition.pk %}">detail</a>
-                    <a href="{% url 'delete' pk=expedition.pk %}">delete</a>
-                    {{ expedition.reference }}</a> — {{ expedition.entreprise }} — {{ expedition.ville_depart }} → {{ expedition.ville_arrivee }} — {{ expedition.ville_poids_kg }} kg</li>
-                {% empty %}
-                <li>Aucune expédition disponible</li>
-            {% endfor %}
+{% extends "expedition/base.html" %}
 
-        </ul>
+{% block title %}Expéditions | TransConnect{% endblock %}
 
-</body>
-</html>
+{% block content %}
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">TRANSPORT &amp; LOGISTIQUE</p>
+            <h1>Expéditions</h1>
+            <p class="page-subtitle">Consultez et gérez vos expéditions en un seul endroit.</p>
+        </div>
+        <a class="button button-primary" href="{% url 'createclass' %}">+ Créer une expédition</a>
+    </div>
+
+    <section class="panel" aria-labelledby="shipments-heading">
+        <div class="panel-heading">
+            <div>
+                <h2 id="shipments-heading">Toutes les expéditions</h2>
+                <p class="muted">Les informations de suivi et les actions disponibles.</p>
+            </div>
+            <span class="count-badge">{{ list|length }} expédition{{ list|length|pluralize:"s" }}</span>
+        </div>
+        {% if list %}
+            <div class="table-wrap">
+                <table class="shipment-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Référence</th>
+                            <th scope="col">Trajet</th>
+                            <th scope="col">Entreprise</th>
+                            <th scope="col">Poids</th>
+                            <th scope="col">Statut</th>
+                            <th scope="col"><span class="sr-only">Actions</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for expedition in list %}
+                            <tr>
+                                <td><a class="reference-link" href="{% url 'detailclass' pk=expedition.pk %}">{{ expedition.reference }}</a></td>
+                                <td>
+                                    <span class="route">{{ expedition.ville_depart }} <span aria-hidden="true">→</span> {{ expedition.ville_arrive }}</span>
+                                </td>
+                                <td>{{ expedition.entreprise }}</td>
+                                <td>{{ expedition.poids_kg }} kg</td>
+                                <td><span class="status-badge">{{ expedition.get_statut_display }}</span></td>
+                                <td class="table-actions">
+                                    <a href="{% url 'detailclass' pk=expedition.pk %}">Détails</a>
+                                    <a href="{% url 'updateclass' pk=expedition.pk %}">Modifier</a>
+                                    <a class="text-danger" href="{% url 'deleteclass' pk=expedition.pk %}">Supprimer</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <span class="empty-icon" aria-hidden="true">↗</span>
+                <h3>Aucune expédition pour le moment</h3>
+                <p>Créez une expédition pour commencer à organiser vos transports.</p>
+                <a class="button button-primary" href="{% url 'createclass' %}">Créer une expédition</a>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}
