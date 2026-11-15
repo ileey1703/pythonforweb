@@ -1,0 +1,21 @@
+{% extends "expedition/base.html" %}
+
+{% block title %}{{ vehicule.immatriculation }} | TransConnect{% endblock %}
+
+{% block content %}
+    <div class="page-heading">
+        <div><p class="eyebrow">FICHE VÉHICULE</p><h1>{{ vehicule.immatriculation }}</h1></div>
+    </div>
+    <section class="panel detail-panel">
+        <dl class="detail-grid">
+            <div class="detail-item"><dt>Type</dt><dd>{{ vehicule.get_type_vehicule_display }}</dd></div>
+            <div class="detail-item"><dt>Capacité</dt><dd>{{ vehicule.capacite_kg }} kg</dd></div>
+            <div class="detail-item"><dt>Disponibilité</dt><dd>{% if vehicule.disponible %}Disponible{% else %}Indisponible{% endif %}</dd></div>
+            <div class="detail-item"><dt>Entreprise</dt><dd>{{ vehicule.entreprise }}</dd></div>
+        </dl>
+        <div class="panel-actions">
+            <a class="button button-secondary" href="{% url 'vehicule_list' %}">Retour aux véhicules</a>
+            <a class="button button-primary" href="{% url 'vehicule_update' pk=vehicule.pk %}">Modifier le véhicule</a>
+        </div>
+    </section>
+{% endblock %}

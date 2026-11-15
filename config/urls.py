@@ -20,4 +20,7 @@ from config.admin import admin_site
 urlpatterns = [
     path('admin/', admin_site.urls),
     path('expedition/', include('ExpeditionApp.urls')),
+    path('entreprises/', include('EntrepriseApp.urls')),
+    path('offres/', include('OffreApp.urls')),
+    path('vehicules/', include('VehiculeApp.urls')),
 ]

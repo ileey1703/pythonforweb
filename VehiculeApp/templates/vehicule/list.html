@@ -1,0 +1,44 @@
+{% extends "expedition/base.html" %}
+
+{% block title %}Véhicules | TransConnect{% endblock %}
+
+{% block content %}
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">GESTION DES VÉHICULES</p>
+            <h1>Véhicules</h1>
+            <p class="page-subtitle">Consultez et gérez les véhicules enregistrés.</p>
+        </div>
+        <a class="button button-primary" href="{% url 'vehicule_create' %}">+ Créer un véhicule</a>
+    </div>
+    <section class="panel">
+        {% if vehicules %}
+            <div class="table-wrap">
+                <table class="shipment-table">
+                    <thead><tr><th>Immatriculation</th><th>Type</th><th>Capacité</th><th>Disponibilité</th><th>Entreprise</th><th>Actions</th></tr></thead>
+                    <tbody>
+                        {% for vehicule in vehicules %}
+                            <tr>
+                                <td><a class="reference-link" href="{% url 'vehicule_detail' pk=vehicule.pk %}">{{ vehicule.immatriculation }}</a></td>
+                                <td>{{ vehicule.get_type_vehicule_display }}</td>
+                                <td>{{ vehicule.capacite_kg }} kg</td>
+                                <td>{% if vehicule.disponible %}Disponible{% else %}Indisponible{% endif %}</td>
+                                <td>{{ vehicule.entreprise }}</td>
+                                <td class="table-actions">
+                                    <a href="{% url 'vehicule_update' pk=vehicule.pk %}">Modifier</a>
+                                    <a class="text-danger" href="{% url 'vehicule_delete' pk=vehicule.pk %}">Supprimer</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <h3>Aucun véhicule pour le moment</h3>
+                <p>Ajoutez un véhicule pour commencer.</p>
+                <a class="button button-primary" href="{% url 'vehicule_create' %}">Créer un véhicule</a>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}

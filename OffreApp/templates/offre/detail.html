@@ -1,0 +1,23 @@
+{% extends "expedition/base.html" %}
+
+{% block title %}Offre pour {{ offre.expedition }} | TransConnect{% endblock %}
+
+{% block content %}
+    <div class="page-heading">
+        <div><p class="eyebrow">FICHE OFFRE</p><h1>Offre pour {{ offre.expedition }}</h1></div>
+        <span class="status-badge status-large">{{ offre.get_statut_display }}</span>
+    </div>
+    <section class="panel detail-panel">
+        <dl class="detail-grid">
+            <div class="detail-item"><dt>Transporteur</dt><dd>{{ offre.entreprise }}</dd></div>
+            <div class="detail-item"><dt>Véhicule</dt><dd>{{ offre.vehicule }}</dd></div>
+            <div class="detail-item"><dt>Prix</dt><dd>{{ offre.prix }}</dd></div>
+            <div class="detail-item"><dt>Délai</dt><dd>{{ offre.delai_jours }} jours</dd></div>
+            <div class="detail-item"><dt>Date de proposition</dt><dd>{{ offre.date_proposition|date:"j F Y, H:i" }}</dd></div>
+        </dl>
+        <div class="panel-actions">
+            <a class="button button-secondary" href="{% url 'offre_list' %}">Retour aux offres</a>
+            <a class="button button-primary" href="{% url 'offre_update' pk=offre.pk %}">Modifier l'offre</a>
+        </div>
+    </section>
+{% endblock %}

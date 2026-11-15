@@ -1,0 +1,43 @@
+{% extends "expedition/base.html" %}
+
+{% block title %}Entreprises | TransConnect{% endblock %}
+
+{% block content %}
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">GESTION DES ENTREPRISES</p>
+            <h1>Entreprises</h1>
+            <p class="page-subtitle">Consultez et gérez les entreprises enregistrées.</p>
+        </div>
+        <a class="button button-primary" href="{% url 'entreprise_create' %}">+ Créer une entreprise</a>
+    </div>
+    <section class="panel">
+        {% if entreprises %}
+            <div class="table-wrap">
+                <table class="shipment-table">
+                    <thead><tr><th>Raison sociale</th><th>Matricule fiscal</th><th>Type</th><th>Gérant</th><th>Actions</th></tr></thead>
+                    <tbody>
+                        {% for entreprise in entreprises %}
+                            <tr>
+                                <td><a class="reference-link" href="{% url 'entreprise_detail' pk=entreprise.pk %}">{{ entreprise.raison_social }}</a></td>
+                                <td>{{ entreprise.matricule_fiscal }}</td>
+                                <td>{{ entreprise.get_type_entreprise_display }}</td>
+                                <td>{{ entreprise.gerant }}</td>
+                                <td class="table-actions">
+                                    <a href="{% url 'entreprise_update' pk=entreprise.pk %}">Modifier</a>
+                                    <a class="text-danger" href="{% url 'entreprise_delete' pk=entreprise.pk %}">Supprimer</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <h3>Aucune entreprise pour le moment</h3>
+                <p>Créez une entreprise pour commencer.</p>
+                <a class="button button-primary" href="{% url 'entreprise_create' %}">Créer une entreprise</a>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}

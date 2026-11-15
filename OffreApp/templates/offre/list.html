@@ -1,0 +1,45 @@
+{% extends "expedition/base.html" %}
+
+{% block title %}Offres | TransConnect{% endblock %}
+
+{% block content %}
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">GESTION DES OFFRES</p>
+            <h1>Offres</h1>
+            <p class="page-subtitle">Consultez et gérez les offres de transport.</p>
+        </div>
+        <a class="button button-primary" href="{% url 'offre_create' %}">+ Créer une offre</a>
+    </div>
+    <section class="panel">
+        {% if offres %}
+            <div class="table-wrap">
+                <table class="shipment-table">
+                    <thead><tr><th>Expédition</th><th>Transporteur</th><th>Véhicule</th><th>Prix</th><th>Délai</th><th>Statut</th><th>Actions</th></tr></thead>
+                    <tbody>
+                        {% for offre in offres %}
+                            <tr>
+                                <td><a class="reference-link" href="{% url 'offre_detail' pk=offre.pk %}">{{ offre.expedition }}</a></td>
+                                <td>{{ offre.entreprise }}</td>
+                                <td>{{ offre.vehicule }}</td>
+                                <td>{{ offre.prix }}</td>
+                                <td>{{ offre.delai_jours }} jours</td>
+                                <td>{{ offre.get_statut_display }}</td>
+                                <td class="table-actions">
+                                    <a href="{% url 'offre_update' pk=offre.pk %}">Modifier</a>
+                                    <a class="text-danger" href="{% url 'offre_delete' pk=offre.pk %}">Supprimer</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <h3>Aucune offre pour le moment</h3>
+                <p>Créez une offre de transport pour commencer.</p>
+                <a class="button button-primary" href="{% url 'offre_create' %}">Créer une offre</a>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}
