@@ -3,7 +3,9 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView, U
 
 from .forms import EntrepriseForm
 from .models import Entreprise
-
+from .forms import registerUserForm 
+from django.shortcuts import render, redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 class EntrepriseList(ListView):
     model = Entreprise
@@ -29,7 +31,7 @@ class EntrepriseCreate(CreateView):
     }
 
 
-class EntrepriseUpdate(UpdateView):
+class EntrepriseUpdate(LoginRequiredMixin, UpdateView):
     model = Entreprise
     form_class = EntrepriseForm
     template_name = "crud/form.html"
@@ -41,7 +43,7 @@ class EntrepriseUpdate(UpdateView):
     }
 
 
-class EntrepriseDelete(DeleteView):
+class EntrepriseDelete(LoginRequiredMixin,DeleteView):
     model = Entreprise
     template_name = "crud/delete.html"
     success_url = reverse_lazy("entreprise_list")
@@ -49,3 +51,12 @@ class EntrepriseDelete(DeleteView):
         "page_title": "Supprimer cette entreprise ?",
         "list_url": "entreprise_list",
     }
+def registerUser(request):
+    if request.method == 'POST':
+        form = registerUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')  # Redirect to the login page after successful registration
+    else:
+        form = registerUserForm()
+    return render(request, 'register.html', {'form': form})

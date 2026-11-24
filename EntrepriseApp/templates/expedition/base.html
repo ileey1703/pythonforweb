@@ -14,10 +14,27 @@
             <span class="brand-mark" aria-hidden="true">T</span>
             <span>TransConnect</span>
         </a>
+        
         <nav class="site-nav" aria-label="Navigation principale">
             <a href="{% url 'listclass' %}">Expéditions</a>
             <a class="button button-primary button-small" href="{% url 'createclass' %}">Nouvelle expédition</a>
         </nav>
+        <nav>
+            <li><a href="{% url 'entreprise_list' %}">Accueil</a></li>
+            {% if user.is_authenticated %}
+            <li>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">Déconnexion</button>
+                </form>
+            </li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Connexion</a></li>
+                <li><a href="{% url 'register' %}">Inscription</a></li>
+            {% endif %}
+            
+        </nav>
+
     </header>
     <main class="page-shell">
         {% block content %}{% endblock %}

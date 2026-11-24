@@ -34,6 +34,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                       
                         {% for expedition in list %}
                             <tr>
                                 <td><a class="reference-link" href="{% url 'detailclass' pk=expedition.pk %}">{{ expedition.reference }}</a></td>
@@ -45,8 +46,10 @@
                                 <td><span class="status-badge">{{ expedition.get_statut_display }}</span></td>
                                 <td class="table-actions">
                                     <a href="{% url 'detailclass' pk=expedition.pk %}">Détails</a>
-                                    <a href="{% url 'updateclass' pk=expedition.pk %}">Modifier</a>
-                                    <a class="text-danger" href="{% url 'deleteclass' pk=expedition.pk %}">Supprimer</a>
+                                    {% if user.is_authenticated %}
+                                        <a href="{% url 'updateclass' pk=expedition.pk %}">Modifier</a>
+                                        <a class="text-danger" href="{% url 'deleteclass' pk=expedition.pk %}">Supprimer</a>
+                                    {% endif %}
                                 </td>
                             </tr>
                         {% endfor %}

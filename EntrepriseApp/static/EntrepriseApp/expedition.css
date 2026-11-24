@@ -79,6 +79,43 @@ textarea:focus-visible {
     font-weight: 800;
 }
 
+.site-header > nav:not(.site-nav) {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.site-header > nav:not(.site-nav) li {
+    list-style: none;
+}
+
+.site-header > nav:not(.site-nav) a {
+    color: #475569;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.site-header > nav:not(.site-nav) a:hover {
+    color: var(--primary);
+}
+
+.site-header > nav:not(.site-nav) form {
+    margin: 0;
+}
+
+.site-header > nav:not(.site-nav) button {
+    min-height: 38px;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid #d8e0eb;
+    border-radius: 8px;
+    background: #fff;
+    color: #334155;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.84rem;
+    font-weight: 700;
+}
+
 .site-nav {
     display: flex;
     align-items: center;
@@ -200,6 +237,7 @@ h3 {
 
 .shipment-table {
     width: 100%;
+    min-width: 760px;
     border-collapse: collapse;
     text-align: left;
 }
@@ -398,8 +436,15 @@ h3 {
 }
 
 .form-panel {
+    width: 100%;
     max-width: 800px;
+    margin: 0 auto;
     padding: 1.75rem;
+}
+
+.form-panel:has(input[type="password"]) {
+    max-width: 560px;
+    margin: 0 auto;
 }
 
 .form-panel form > p {
@@ -529,10 +574,18 @@ h3 {
 @media (max-width: 760px) {
     .site-header {
         min-height: 64px;
-        padding: 0 1rem;
+        padding: 0.75rem 1rem;
+        flex-wrap: wrap;
+        gap: 0.75rem 1rem;
+    }
+
+    .site-header > nav:not(.site-nav) {
+        margin-left: auto;
     }
 
     .site-nav {
+        width: 100%;
+        justify-content: flex-end;
         gap: 0.8rem;
     }
 
@@ -570,12 +623,16 @@ h3 {
 
 @media (max-width: 480px) {
     .site-header {
-        gap: 0.5rem;
+        gap: 0.65rem;
     }
 
     .brand {
         gap: 0.45rem;
         font-size: 0.95rem;
+    }
+
+    .site-header > nav:not(.site-nav) {
+        gap: 0.6rem;
     }
 
     .brand-mark {

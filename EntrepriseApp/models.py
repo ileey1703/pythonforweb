@@ -20,7 +20,6 @@ class Utilisateur(AbstractUser):
     user_id = models.CharField(primary_key=True, max_length=8, unique=True)
     telephone = models.CharField(max_length=15, blank=True, null=True)
     role = models.CharField(max_length=20, choices=[
-        ('admin', 'Admin'),
         ('c', 'chargeur'),
         ('t', 'transporteur')
     ], default='c')
